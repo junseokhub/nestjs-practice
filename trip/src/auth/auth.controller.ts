@@ -38,12 +38,11 @@ export class AuthController {
   }
 
 
-  @Get('authenticate')
+  @Get('/authenticate')
   @UseGuards(JwtAccessAuthGuard)
   async user(@Req() req: Request, @Res() res: Response) {
     const id: number = req.user.id; 
-    const verifiedUser: User = await this.userService.findOneUser(id);
-    const { password, ...result } = verifiedUser; 
-    return res.send(result);
+    const user: User = await this.userService.findOneUser(id);
+    return res.send(user);
   }
 }
