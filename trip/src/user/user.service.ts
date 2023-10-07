@@ -14,6 +14,10 @@ export class UserService {
     return await this.userRepository.findAllUser();
   }
 
+  async findOneUser(id: number) {
+    return await this.userRepository.findOneUser(id);
+  }
+
   async findOneUserEmail(email: string) {
     return await this.userRepository.findOneUserEmail(email);
   }
