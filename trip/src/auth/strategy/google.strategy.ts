@@ -23,6 +23,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       email,
       name: displayName,
       googleId: id,
+      accessToken,
     };
   }
 }

@@ -21,6 +21,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy, "kakao") {
       name: profile.displayName,
       email: profile._json.kakao_account.email,
       kakaoId: profile.id,
+      accessToken,
     };
   }
 }
