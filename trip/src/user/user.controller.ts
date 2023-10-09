@@ -7,7 +7,7 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
-  @Get('/:id')
+  @Get()
   async findAllUser() {
     return await this.userService.findAllUser();
   }
