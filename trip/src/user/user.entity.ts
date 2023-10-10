@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Invite } from 'src/invite/invite.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -22,4 +23,7 @@ export class User {
 
   @Column({ nullable: true })
   profile: string;
+
+  @OneToMany(() => Invite, invite => invite.user, { cascade: true })
+  invite: Invite[];
 }
