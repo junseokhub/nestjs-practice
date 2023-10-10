@@ -1,5 +1,5 @@
 import { Invite } from 'src/invite/invite.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -23,6 +23,19 @@ export class User {
 
   @Column({ nullable: true })
   profile: string;
+
+  @Column({
+    type: 'timestamp',
+    precision: 6,
+    nullable: true,
+   })
+   loginAt: Date;
+
+   @CreateDateColumn()
+   createdAt: Date;
+
+   @UpdateDateColumn()
+   updatedAt: Date;
 
   @OneToMany(() => Invite, invite => invite.user, { cascade: true })
   invite: Invite[];
