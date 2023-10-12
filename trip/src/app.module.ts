@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { InviteModule } from './invite/invite.module';
+import { TemplateModule } from './template/template.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { InviteModule } from './invite/invite.module';
     UserModule,
     AuthModule,
     InviteModule,
+    TemplateModule,
   ],
   controllers: [AppController],
   providers: [AppService],
