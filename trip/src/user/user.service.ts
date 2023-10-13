@@ -3,6 +3,8 @@ import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { KakaoUserDto } from './dto/kakao-user.dto';
 import { GoogleUserDto } from './dto/google-user.dto';
+import { LoginType } from './interface/interface';
+import { AppleUserDto } from './dto/apple-user.dto';
 
 @Injectable()
 export class UserService {
@@ -31,8 +33,9 @@ export class UserService {
   }
 
   async signUpKaKaoUser(kakoUserDto: KakaoUserDto): Promise<User> {
+    await this.userRepository.findOneUserKakaoId(kakoUserDto.kakaoId);
     const user = new User();
-    user.type = 'kakao';
+    user.type = LoginType.KAKAO;
     user.email = kakoUserDto.email;
     user.name = kakoUserDto.name;
     user.kakaoId = kakoUserDto.kakaoId;
@@ -44,7 +47,7 @@ export class UserService {
   async signUpGoogleUser(googleUserDto: GoogleUserDto) {
     await this.userRepository.findOneUserGoogleId(googleUserDto.googleId);
     const user = new User();
-    user.type = 'google';
+    user.type = LoginType.GOOGLE;
     user.email = googleUserDto.email;
     user.name = googleUserDto.name;
     user.googleId = googleUserDto.googleId;
@@ -52,4 +55,8 @@ export class UserService {
     await this.userRepository.createGoogleUser(user);
     return user;
   }
+
+  // async signUpAppleUser(appleUserDto: AppleUserDto) {
+  //   await this.userRepository.findOneUserAppleId(appleUserDto.appleId);
+  // }
 }

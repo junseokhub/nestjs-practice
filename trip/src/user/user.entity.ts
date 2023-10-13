@@ -1,13 +1,17 @@
 import { Invite } from 'src/invite/invite.entity';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { LoginType } from './interface/interface';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  type: string;
+  @Column({
+    type: 'enum',
+    enum: LoginType,
+  })
+  type: LoginType;
 
   @Column({ nullable: true })
   kakaoId: number;
