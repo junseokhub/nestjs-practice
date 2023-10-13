@@ -30,11 +30,16 @@ export class AuthController {
 
   @Get('/kakao/login')
   @UseGuards(AuthGuard('kakao'))
-  async kakaoLogin(
-    @Req() req: Request, @Res() res: Response) {
+  async kakaoLogin(@Req() req: Request, @Res() res: Response) {
     await this.generateTokenCookie(req, res);
     await this.authService.kakaoLogin({ req, res });
     return res.redirect(process.env.REDIRECT_URL)
+  }
+
+  @Get('/apple/login')
+  @UseGuards(AuthGuard('apple'))
+  async appleLogin(@Req() req: Request, @Res() res: Response) {
+    console.log(res);
   }
 
 
