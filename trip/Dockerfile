@@ -61,7 +61,7 @@ ENV NODE_ENV prod
 
 COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
 COPY --from=deps /app/node_modules ./node_modules
-RUN mkdir -p /app/logs && chown -R nestjs:nodejs /app/logs
+
 USER nestjs
 
 EXPOSE 8080
