@@ -7,6 +7,11 @@ import { UpdateTemplateDto } from './dto/update-template.dto';
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 
+  @Get()
+  async findAllTemplate() {
+    return await this.templateService.findAllTemplate();
+  }
+
   @Get('/:id')
   async findOneTemplate(@Param('id') id: number) {
     return await this.templateService.findOneTemplate(id);

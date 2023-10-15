@@ -7,6 +7,10 @@ export class TemplateRepository extends Repository<Template> {
   constructor(private dataSource: DataSource) {
     super(Template, dataSource.createEntityManager());
   }
+  
+  async findAllTemplate() {
+    return await this.find();
+  }
 
   async findOneTemplate(id: number) {
     return await this.findOne({

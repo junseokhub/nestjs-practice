@@ -11,6 +11,10 @@ export class TemplateService {
     private readonly userService: UserService,
   ) {}
 
+  async findAllTemplate() {
+    return await this.templateRepository.findAllTemplate();
+  }
+
   async findOneTemplate(id: number) {
     const template = await this.templateRepository.findOneTemplate(id);
     if (!template) {
