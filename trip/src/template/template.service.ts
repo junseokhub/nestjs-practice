@@ -22,4 +22,9 @@ export class TemplateService {
     }
     return template;
   }
+
+  async findOneUserWithTemplate(userId: number) {
+    const template = await this.userService.findOneUserWithTemplate(userId);
+    return template.template;
+  }
 }

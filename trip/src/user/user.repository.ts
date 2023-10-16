@@ -39,6 +39,13 @@ export class UserRepository extends Repository<User> {
     });
   }
 
+  async findOneUserWithTemplate(id: number) {
+    return await this.findOne({
+      where: { id },
+      relations: ['template'],
+    });
+  }
+
   async createGoogleUser(createUserDto: GoogleUserDto): Promise<User> {
     const user: User = plainToInstance(User, createUserDto);
     const queryRunner = this.dataSource.createQueryRunner();

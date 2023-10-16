@@ -1,6 +1,7 @@
 import { Invite } from 'src/invite/invite.entity';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { LoginType } from './interface/interface';
+import { Template } from 'src/template/template.entity';
 
 @Entity()
 export class User {
@@ -43,4 +44,7 @@ export class User {
 
   @OneToMany(() => Invite, invite => invite.user, { cascade: true })
   invite: Invite[];
+
+  @OneToMany(() => Template, template => template.user, { cascade: true })
+  template: Template[];
 }

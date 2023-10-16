@@ -16,4 +16,9 @@ export class TemplateController {
   async findOneTemplate(@Param('id') id: number) {
     return await this.templateService.findOneTemplate(id);
   }
+
+  @Get('/user/:userId')
+  async findOneUserWithTemplate(@Param('userId') userId: number) {
+    return await this.templateService.findOneUserWithTemplate(userId);
+  }
 }
