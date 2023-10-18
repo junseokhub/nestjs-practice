@@ -37,6 +37,11 @@ export class UserService {
     return await this.userRepository.findOneUserWithTemplate(id);
   }
 
+  async findOneUserWithInvite(id: number) {
+    await this.findOneUser(id);
+    return await this.userRepository.findOneUserWithInvite(id);
+  }
+
   async signUpKaKaoUser(kakoUserDto: KakaoUserDto): Promise<User> {
     await this.userRepository.findOneUserKakaoId(kakoUserDto.kakaoId);
     const user = new User();

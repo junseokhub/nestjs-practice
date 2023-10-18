@@ -8,10 +8,10 @@ export class Invite {
   id: number;
 
   @Column()
-  inviteId: number;
+  sendId: number;
 
   @Column()
-  invitedId: number;
+  recieveId: number;
 
   @Column({
     type: 'enum',
@@ -21,6 +21,6 @@ export class Invite {
   status: STATUS;
 
   @ManyToOne(() => User, (user) => user.invite, { onDelete: 'CASCADE' })
-  @JoinColumn([{ name: 'inviteId' }])
+  @JoinColumn([{ name: 'sendId' }, { name: 'receiveId'}])
   user: User;
 }

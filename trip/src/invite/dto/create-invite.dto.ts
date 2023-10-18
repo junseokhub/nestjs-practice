@@ -1,9 +1,17 @@
-import { IsNumber } from "class-validator";
+import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { STATUS } from "../interface/interface";
 
 export class CreateInviteDto {
   @IsNumber()
-  inviteId: number;
+  sendId: number;
+
+  @IsString()
+  receiveUser: string;
 
   @IsNumber()
-  invitedId: number;
+  @IsOptional()
+  receiveId: number;
+
+  @IsEnum(STATUS)
+  status: STATUS;
 }
