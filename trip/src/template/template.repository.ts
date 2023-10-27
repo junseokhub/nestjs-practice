@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { Template } from "./template.entity";
+import { CreateTemplateDto } from "./dto/create-template.dto";
+import { plainToInstance } from "class-transformer";
 
 @Injectable()
 export class TemplateRepository extends Repository<Template> {
@@ -16,5 +18,23 @@ export class TemplateRepository extends Repository<Template> {
     return await this.findOne({
       where: { id },
     });
+  }
+
+  async createTemplate(createTemplateDto: CreateTemplateDto): Promise<Template> {
+    const template: Template = plainToInstance(Template, createTemplateDto);
+    const queryRunner = this.dataSource.createQueryRunner();
+    
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.save(createTemplateDto);
+      await queryRunner.commitTransaction();
+      return template;
+    } catch (err){
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 }
