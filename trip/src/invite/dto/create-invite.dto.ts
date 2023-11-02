@@ -2,8 +2,8 @@ import { IsNumber } from "class-validator";
 
 export class CreateInviteDto {
   @IsNumber()
-  inviteId: number;
+  sendId: number;
 
   @IsNumber()
-  invitedId: number;
+  receiveId: number;
 }
