@@ -4,6 +4,7 @@ import { STATUS } from "../interface/interface";
 export class CreateInviteDto {
   @IsNumber()
   sendId: number;
+<<<<<<< HEAD
 
   @IsString()
   receiveUser: string;
@@ -14,4 +15,9 @@ export class CreateInviteDto {
 
   @IsEnum(STATUS)
   status: STATUS;
+=======
+
+  @IsNumber()
+  receiveId: number;
+>>>>>>> master
 }

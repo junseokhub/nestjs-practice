@@ -21,4 +21,14 @@ export class TemplateController {
   async findOneUserWithTemplate(@Param('userId') userId: number) {
     return await this.templateService.findOneUserWithTemplate(userId);
   }
+
+  @Post()
+  async createTemplate(@Body() createTemplateDto: CreateTemplateDto) {
+    return await this.templateService.createTemplate(createTemplateDto);
+  }
+
+  @Post('/:id')
+  async updateTemplate(@Param('id') id: number, updateTemplateDto: UpdateTemplateDto) {
+    return await this.templateService.updateTemplate(id, updateTemplateDto);
+  }
 }

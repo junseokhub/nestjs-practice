@@ -3,6 +3,7 @@ import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
 import { TemplateRepository } from './template.repository';
 import { UserService } from 'src/user/user.service';
+import { Template } from './template.entity';
 
 @Injectable()
 export class TemplateService {
@@ -26,5 +27,19 @@ export class TemplateService {
   async findOneUserWithTemplate(userId: number) {
     const template = await this.userService.findOneUserWithTemplate(userId);
     return template.template;
+  }
+  
+  async createTemplate(createTemplateDto: CreateTemplateDto) {
+    const template = new Template();
+    template.userId = createTemplateDto.userId;
+    await this.templateRepository.createTemplate(template);
+    return template;
+  }
+
+  async updateTemplate(id: number, updateTemplateDto: UpdateTemplateDto) {
+    const template = await this.findOneTemplate(id);
+    template.userId = updateTemplateDto.userId;
+    await this.templateRepository.updateTemplate(id, updateTemplateDto);
+    return await this.findOneTemplate(id);
   }
 }
