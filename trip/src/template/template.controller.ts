@@ -31,4 +31,9 @@ export class TemplateController {
   async updateTemplate(@Param('id') id: number, updateTemplateDto: UpdateTemplateDto) {
     return await this.templateService.updateTemplate(id, updateTemplateDto);
   }
+
+  @Delete('/:id')
+  async deleteTemplate(@Param('id') id: number) {
+    return await this.templateService.deleteTemplate(id);
+  }
 }

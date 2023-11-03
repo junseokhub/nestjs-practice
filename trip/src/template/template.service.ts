@@ -42,4 +42,9 @@ export class TemplateService {
     await this.templateRepository.updateTemplate(id, updateTemplateDto);
     return await this.findOneTemplate(id);
   }
+
+  async deleteTemplate(id: number) {
+    await this.findOneTemplate(id);
+    return await this.templateRepository.deleteTemplate(id);
+  }
 }
