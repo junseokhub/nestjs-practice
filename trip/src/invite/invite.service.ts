@@ -14,6 +14,10 @@ export class InviteService {
     private readonly templateService: TemplateService,
   ) {}
 
+  async findOneInvite() {
+    
+  }
+
   async inviteUser(createInviteDto: CreateInviteDto) {
     const sendUser = await this.userService.findOneUser(createInviteDto.sendId);
     const receiveUser = await this.userService.findOneUser(createInviteDto.receiveId);

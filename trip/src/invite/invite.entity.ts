@@ -1,16 +1,20 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "src/user/user.entity";
+import { Template } from "src/template/template.entity";
 
 @Entity()
 export class Invite {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   sendId: number;
 
-  @Column()
+  @Column({ nullable: true })
   receiveId: number;
+
+  @Column({ nullable: true })
+  teamplteId: number;
 
   // @Column({
   //   type: 'enum',
@@ -22,4 +26,8 @@ export class Invite {
   @ManyToOne(() => User, (user) => user.invite, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'sendId' }, { name: 'receiveId'}])
   user: User;
+
+  @ManyToOne(() => Template, (template) => template.invite, { onDelete: 'CASCADE' })
+  @JoinColumn([{ name: 'templateId'}])
+  template: Template;
 }

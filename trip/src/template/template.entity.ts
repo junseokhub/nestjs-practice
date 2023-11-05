@@ -1,5 +1,6 @@
+import { Invite } from "src/invite/invite.entity";
 import { User } from "src/user/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Template {
@@ -21,4 +22,7 @@ export class Template {
   @ManyToOne(() => User, (user) => user.template, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'createdId' }, { name: 'updatedId'}])
   user: User;
+
+  @OneToMany(() => Invite, invite => invite.template, { cascade: true })
+  invite: Invite[];
 }
