@@ -7,4 +7,13 @@ export class InviteRepository extends Repository<Invite> {
   constructor(private dataSource: DataSource) {
     super(Invite, dataSource.createEntityManager());
   }
+
+  async findOneInviteWithReceiveId(templateId: number, receiveId: number) {
+    return await this.findOne({
+      where: {
+        templateId,
+        receiveId,
+      },
+    });
+  }
 }

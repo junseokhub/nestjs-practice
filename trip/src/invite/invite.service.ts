@@ -14,17 +14,21 @@ export class InviteService {
     private readonly templateService: TemplateService,
   ) {}
 
-  async findOneInvite() {
-    
+  async findOneInvite(templateId: number, receiveId: number) {
+    const template = await this.templateService.findOneTemplate(templateId);
+    const user = await this.userService.findOneUser(receiveId);
+    return await this.inviteRepository.findOneInviteWithReceiveId(template.id, user.id);
   }
 
   async inviteUser(createInviteDto: CreateInviteDto) {
     const sendUser = await this.userService.findOneUser(createInviteDto.sendId);
     const receiveUser = await this.userService.findOneUser(createInviteDto.receiveId);
+    const template = await this.templateService.findOneTemplate(createInviteDto.templateId);
 
     const invite = new Invite();
     invite.sendId = sendUser.id;
     invite.receiveId = receiveUser.id;
+    invite.templateId = template.id;
 
     await this.inviteRepository.save(invite);
     return invite;

@@ -14,7 +14,7 @@ export class Invite {
   receiveId: number;
 
   @Column({ nullable: true })
-  teamplteId: number;
+  templateId: number;
 
   // @Column({
   //   type: 'enum',
