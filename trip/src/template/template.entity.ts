@@ -7,9 +7,12 @@ export class Template {
   id: number;
 
   @Column({ nullable: true })
-  userId: number;
+  createdId: number;
+
+  @Column({ nullable: true })
+  updatedId: number;
 
   @ManyToOne(() => User, (user) => user.template, { onDelete: 'CASCADE' })
-  @JoinColumn([{ name: 'userId' }])
+  @JoinColumn([{ name: 'createdId' }, { name: 'updatedId'}])
   user: User;
 }

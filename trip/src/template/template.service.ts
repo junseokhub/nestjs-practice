@@ -31,14 +31,14 @@ export class TemplateService {
   
   async createTemplate(createTemplateDto: CreateTemplateDto) {
     const template = new Template();
-    template.userId = createTemplateDto.userId;
+    template.createdId = createTemplateDto.createdId;
     await this.templateRepository.createTemplate(template);
     return template;
   }
 
   async updateTemplate(id: number, updateTemplateDto: UpdateTemplateDto) {
     const template = await this.findOneTemplate(id);
-    template.userId = updateTemplateDto.userId;
+    template.updatedId = updateTemplateDto.updatedId;
     await this.templateRepository.updateTemplate(id, updateTemplateDto);
     return await this.findOneTemplate(id);
   }
