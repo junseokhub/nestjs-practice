@@ -1,5 +1,5 @@
 import { User } from "src/user/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Template {
@@ -11,6 +11,12 @@ export class Template {
 
   @Column({ nullable: true })
   updatedId: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.template, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'createdId' }, { name: 'updatedId'}])
