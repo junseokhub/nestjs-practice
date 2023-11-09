@@ -30,7 +30,7 @@ export class InviteService {
     invite.receiveId = receiveUser.id;
     invite.templateId = template.id;
 
-    await this.inviteRepository.save(invite);
+    await this.inviteRepository.inviteUser(invite);
     return invite;
   }
 }

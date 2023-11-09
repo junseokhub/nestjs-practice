@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { Invite } from "./invite.entity";
+import { CreateInviteDto } from "./dto/create-invite.dto";
+import { plainToInstance } from "class-transformer";
 
 @Injectable()
 export class InviteRepository extends Repository<Invite> {
@@ -15,5 +17,23 @@ export class InviteRepository extends Repository<Invite> {
         receiveId,
       },
     });
+  }
+
+  async inviteUser(createInviteDto: CreateInviteDto) {
+    const invite: Invite = plainToInstance(Invite, createInviteDto);
+    const queryRunner = this.dataSource.createQueryRunner();
+    
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.save(createInviteDto);
+      await queryRunner.commitTransaction();
+      return invite;
+    } catch (err){
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 }
