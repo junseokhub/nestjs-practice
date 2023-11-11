@@ -24,7 +24,7 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleLogin(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     await this.generateTokenCookie(req, res);
-    await this.authService.googleLogin({ req, res });
+    await this.authService.googleLogin(req);
     return res.redirect(process.env.REDIRECT_URL)
   }
 
@@ -32,7 +32,7 @@ export class AuthController {
   @UseGuards(AuthGuard('kakao'))
   async kakaoLogin(@Req() req: Request, @Res() res: Response) {
     await this.generateTokenCookie(req, res);
-    await this.authService.kakaoLogin({ req, res });
+    await this.authService.kakaoLogin(req);
     return res.redirect(process.env.REDIRECT_URL)
   }
 

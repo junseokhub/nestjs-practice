@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { Payload } from './interface/jwt.payload';
 import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
     return this.jwtService.signAsync(payload);
   }
   
-  async kakaoLogin({ req, res }) {
+  async kakaoLogin(req: Request) {
     const user = await this.userService.findOneKakaoId(req.user.kakaoId);
     if (!user) {
       await this.userService.signUpKaKaoUser({
@@ -33,7 +34,7 @@ export class AuthService {
    return user;
   }
 
-  async googleLogin({ req, res }) {
+  async googleLogin(req: Request) {
     const user = await this.userService.findOneGoogleId(req.user.googleId);
     if (!user) {
       await this.userService.signUpGoogleUser({
