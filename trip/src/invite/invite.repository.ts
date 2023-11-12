@@ -19,6 +19,14 @@ export class InviteRepository extends Repository<Invite> {
     });
   }
 
+  async findInvitedTemplateList(receiveId: number) {
+    const templates = await this.find({
+      where: { receiveId: receiveId },
+      relations: ['user', 'template'],
+    });
+    return templates;
+  }
+
   async inviteUser(createInviteDto: CreateInviteDto) {
     const invite: Invite = plainToInstance(Invite, createInviteDto);
     const queryRunner = this.dataSource.createQueryRunner();

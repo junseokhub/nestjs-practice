@@ -20,6 +20,31 @@ export class InviteService {
     return await this.inviteRepository.findOneInviteWithReceiveId(template.id, user.id);
   }
 
+  async findOneInvitedTemplate(sendId: number) {
+    const template = await this.inviteRepository.findInvitedTemplateList(sendId);
+    return template.map(e => e.template);
+  }
+
+  async findCreatTemplateAndInvitedTemplateList(userId: number) {
+    const invitedTemplate = await this.findOneInvitedTemplate(userId);
+    const createdTemplate = await this.userService.findOneUserWithInvite(userId);
+    const myTemplateList = createdTemplate.template.map(e => {
+      return {
+        ...e, 
+        mine: true,
+      };
+    });
+
+    const myInvitedTemplate = invitedTemplate.map(e => {
+      return {
+        ...e,
+        mind: false,
+      };
+    });
+    const combiedList = [...myTemplateList, ...myInvitedTemplate];
+    return combiedList;
+  }
+
   async inviteUser(createInviteDto: CreateInviteDto) {
     const sendUser = await this.userService.findOneUser(createInviteDto.sendId);
     const receiveUser = await this.userService.findOneUser(createInviteDto.receiveId);

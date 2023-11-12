@@ -16,13 +16,6 @@ export class Invite {
   @Column({ nullable: true })
   templateId: number;
 
-  // @Column({
-  //   type: 'enum',
-  //   enum: STATUS,
-  //   default: STATUS.PENDING,
-  // })
-  // status: STATUS;
-
   @ManyToOne(() => User, (user) => user.invite, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'sendId' }, { name: 'receiveId'}])
   user: User;
