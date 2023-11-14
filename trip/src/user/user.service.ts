@@ -54,6 +54,10 @@ export class UserService {
     return user
   }
 
+  async userCheck() {
+    return '';
+  }
+
   async signUpGoogleUser(googleUserDto: GoogleUserDto) {
     await this.userRepository.findOneUserGoogleId(googleUserDto.googleId);
     const user = new User();
