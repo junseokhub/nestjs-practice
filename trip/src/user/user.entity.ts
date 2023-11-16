@@ -21,6 +21,9 @@ export class User {
   googleId: string;
 
   @Column({ nullable: true })
+  appleId: string;
+
+  @Column({ nullable: true })
   email: string;
 
   @Column()
