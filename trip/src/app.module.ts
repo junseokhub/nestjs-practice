@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { InviteModule } from './invite/invite.module';
 import { TemplateModule } from './template/template.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './common/exception-filter';
 
 @Module({
   imports: [
@@ -30,6 +32,12 @@ import { TemplateModule } from './template/template.module';
     TemplateModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    }
+  ],
 })
 export class AppModule {}
