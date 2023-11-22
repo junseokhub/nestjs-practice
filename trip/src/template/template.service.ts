@@ -40,7 +40,7 @@ export class TemplateService {
     const template = await this.findOneTemplate(id);
     template.updatedId = updateTemplateDto.updatedId;
     await this.templateRepository.updateTemplate(id, template);
-    return await this.findOneTemplate(id);
+    return template;
   }
 
   async deleteTemplate(id: number) {

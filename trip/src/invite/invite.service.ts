@@ -4,6 +4,7 @@ import { UserService } from 'src/user/user.service';
 import { TemplateService } from 'src/template/template.service';
 import { InviteRepository } from './invite.repository';
 import { Invite } from './invite.entity';
+import { STATUS } from './interface/interface';
 
 @Injectable()
 export class InviteService {
@@ -53,6 +54,7 @@ export class InviteService {
     invite.sendId = sendUser.id;
     invite.receiveId = receiveUser.id;
     invite.templateId = template.id;
+    invite.status = STATUS.PENDING;
 
     await this.inviteRepository.inviteUser(invite);
     return invite;
