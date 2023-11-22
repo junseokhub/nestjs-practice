@@ -44,4 +44,26 @@ export class InviteRepository extends Repository<Invite> {
       await queryRunner.release();
     }
   }
+
+  async deleteInviteUser(id: number) {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager
+      .createQueryBuilder(Invite, 'invite')
+      .delete()
+      .from(Invite)
+      .where("id = :id", { id })
+      .execute();
+      
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+  }
 }
