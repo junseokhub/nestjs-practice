@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateInviteDto } from './dto/create-invite.dto';
-import { UpdateInviteDto } from './dto/update-invite.dto';
 import { UserService } from 'src/user/user.service';
 import { TemplateService } from 'src/template/template.service';
 import { InviteRepository } from './invite.repository';
