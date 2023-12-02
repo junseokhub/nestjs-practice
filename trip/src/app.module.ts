@@ -9,6 +9,7 @@ import { InviteModule } from './invite/invite.module';
 import { TemplateModule } from './template/template.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/exception-filter';
+import { RedisCacheModule } from './common/redis-cache/redis-cache.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { HttpExceptionFilter } from './common/exception-filter';
     AuthModule,
     InviteModule,
     TemplateModule,
+    RedisCacheModule,
   ],
   controllers: [AppController],
   providers: [

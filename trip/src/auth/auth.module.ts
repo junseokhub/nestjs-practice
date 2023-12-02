@@ -8,6 +8,7 @@ import { GoogleStrategy } from './strategy/google.strategy';
 import { KakaoStrategy } from './strategy/kakao.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtAccessAuthGuard } from './guard/jwt-access.guard';
+import { RedisCacheService } from 'src/common/redis-cache/redis-cache.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { JwtAccessAuthGuard } from './guard/jwt-access.guard';
     GoogleStrategy,
     JwtModule,
     JwtAccessAuthGuard,
+    RedisCacheService,
   ]
 })
 export class AuthModule {}
