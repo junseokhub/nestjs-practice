@@ -90,12 +90,12 @@ export class AuthService {
   async kakaoLogin(req: Request) {
     const user = await this.userService.findOneKakaoId(req.user.kakaoId);
     if (!user) {
-      await this.userService.signUpKaKaoUser({
+      const createUser = await this.userService.signUpKaKaoUser({
         email: req.user.email || null,
         name: req.user.name,
         kakaoId: req.user.kakaoId,
       });
-      return user;
+      return createUser;
     } 
    return user;
   }
@@ -103,12 +103,12 @@ export class AuthService {
   async googleLogin(req: Request) {
     const user = await this.userService.findOneGoogleId(req.user.googleId);
     if (!user) {
-      await this.userService.signUpGoogleUser({
+      const createUser = await this.userService.signUpGoogleUser({
         email: req.user.email,
         name: req.user.name,
         googleId: req.user.googleId,
       });
-      return user;
+      return createUser;
     }
     return user;
   }

@@ -49,7 +49,7 @@ export class UserService {
     user.email = kakoUserDto.email;
     user.name = kakoUserDto.name;
     user.kakaoId = kakoUserDto.kakaoId;
-
+    
     await this.userRepository.createKaKaoUser(user);
     return user
   }

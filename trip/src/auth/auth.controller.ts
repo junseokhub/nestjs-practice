@@ -13,8 +13,7 @@ export class AuthController {
     private readonly userService: UserService,
     ) {}
 
-  async integrationLogin(req: Request, res: Response){
-    const user = await this.authService.googleLogin(req) || await this.authService.kakaoLogin(req);
+  private async integrationLogin(user: User, res: Response){
     const accessToken = await this.authService.generateAccessToken(user);
     const refreshToken = await this.authService.generateRefreshToken(user);
     res.setHeader('Authorization', 'Bearer ' + [accessToken, refreshToken]);
@@ -29,27 +28,19 @@ export class AuthController {
   
   }
 
-  private async generateTokenCookie(req: Request, res: Response){
-    const accessToken = await this.authService.generateAccessToken(req.user);
-    res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      maxAge: parseInt(process.env.JWT_ACCESS_EXPIRATION_TIME),
-     });
-  }
-  
   @Get('/google/login')
   @UseGuards(AuthGuard('google'))
   async googleLogin(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    await this.generateTokenCookie(req, res);
-    await this.authService.googleLogin(req);
+    const user = await this.authService.googleLogin(req);
+    await this.integrationLogin(user, res);
     return res.redirect(process.env.REDIRECT_URL)
   }
 
   @Get('/kakao/login')
   @UseGuards(AuthGuard('kakao'))
   async kakaoLogin(@Req() req: Request, @Res() res: Response) {
-    await this.generateTokenCookie(req, res);
-    await this.authService.kakaoLogin(req);
+    const user = await this.authService.kakaoLogin(req);
+    await this.integrationLogin(user, res);
     return res.redirect(process.env.REDIRECT_URL)
   }
 
@@ -63,7 +54,7 @@ export class AuthController {
   @Get('/authenticate')
   @UseGuards(JwtAccessAuthGuard)
   async user(@Req() req: Request, @Res() res: Response) {
-    const id: number = req.user.id; 
+    const id: number = req.user.kakaoId || req.user.googleId; 
     const user: User = await this.userService.findOneUser(id);
     return res.send(user);
   }
@@ -72,7 +63,8 @@ export class AuthController {
   @Post('logout')
   @UseGuards(JwtRefreshGuard)
   async logout(@Req() req: Request, @Res() res: Response) {
-    await this.authService.removeRefreshToken(req.user.id);
+    const id = req.user.kakaoId || req.user.googleId;
+    await this.authService.removeRefreshToken(id);
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
     return res.send({
