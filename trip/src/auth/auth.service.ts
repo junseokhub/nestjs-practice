@@ -21,6 +21,7 @@ export class AuthService {
       id: user.id,
       kakaoId: user.kakaoId,
       googleId: user.googleId,
+      appleId: user.appleId,
       email: user.email
     }
     return this.jwtService.signAsync(payload);
@@ -31,12 +32,14 @@ export class AuthService {
       id: user.id,
       kakaoId: user.kakaoId,
       googleId: user.googleId,
+      appleId: user.appleId,
       email: user.email,
     }
     return this.jwtService.signAsync({
       id: payload.id,
       kakaoId: user.kakaoId,
       googleId: user.googleId,
+      appleId: user.appleId,
       email: user.email,
      }, 
      {
