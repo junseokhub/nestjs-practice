@@ -1,0 +1,63 @@
+import { Injectable } from '@nestjs/common';
+import { CreateInviteDto } from './dto/create-invite.dto';
+import { UserService } from 'src/user/user.service';
+import { TemplateService } from 'src/template/template.service';
+import { InviteRepository } from './invite.repository';
+import { Invite } from './invite.entity';
+import { STATUS } from './interface/interface';
+
+@Injectable()
+export class InviteService {
+  constructor(
+    private readonly inviteRepository: InviteRepository,
+    private readonly userService: UserService,
+    private readonly templateService: TemplateService,
+  ) {}
+
+  async findOneInvite(templateId: number, receiveId: number) {
+    const template = await this.templateService.findOneTemplate(templateId);
+    const user = await this.userService.findOneUser(receiveId);
+    return await this.inviteRepository.findOneInviteWithReceiveId(template.id, user.id);
+  }
+
+  async findOneInvitedTemplate(sendId: number) {
+    const template = await this.inviteRepository.findInvitedTemplateList(sendId);
+    return template.map(e => e.template);
+  }
+
+  async findCreatTemplateAndInvitedTemplateList(userId: number) {
+    const invitedTemplate = await this.findOneInvitedTemplate(userId);
+    const createdTemplate = await this.userService.findOneUserWithInvite(userId);
+    const myTemplateList = createdTemplate.template.map(e => {
+      return {
+        ...e, 
+        mine: true,
+      };
+    });
+
+    const myInvitedTemplate = invitedTemplate.map(e => {
+      return {
+        ...e,
+        mind: false,
+      };
+    });
+    const combiedList = [...myTemplateList, ...myInvitedTemplate];
+    return combiedList;
+  }
+
+  async inviteUser(createInviteDto: CreateInviteDto) {
+    const sendUser = await this.userService.findOneUser(createInviteDto.sendId);
+    const receiveUser = await this.userService.findOneUser(createInviteDto.receiveId);
+    const template = await this.templateService.findOneTemplate(createInviteDto.templateId);
+
+    const invite = new Invite();
+    invite.sendId = sendUser.id;
+    invite.receiveId = receiveUser.id;
+    invite.templateId = template.id;
+    invite.status = STATUS.PENDING;
+
+    await this.inviteRepository.inviteUser(invite);
+    return invite;
+  }
+}
+
